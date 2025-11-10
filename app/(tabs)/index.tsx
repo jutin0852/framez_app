@@ -1,98 +1,99 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { ThemedView } from "@/components/themed-view";
+import { useState } from "react";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
-
-export default function HomeScreen() {
+export default function Feed() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ThemedView>
+      <View>
+        <Text style={{fontFamily:'josefin-sans'}} className="m-auto py-4">FRAMEZ</Text>
+      </View>
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={[
+          { key: "Devin" },
+          { key: "Dan" },
+          { key: "Dominic" },
+          { key: "Jackson" },
+          { key: "James" },
+          { key: "Joel" },
+          { key: "John" },
+          { key: "Jillian" },
+          { key: "Jimmy" },
+          { key: "Julie" },
+        ]}
+        renderItem={({ item }) => <Post />}
+      />
+      <Post />
+      <Post />
+    </ThemedView>
   );
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+const Post = () => {
+  return (
+    <View>
+      
+      <View className="flex-row p-4 gap-3 border-t border-black/20 ">
+        <Image
+          source={{ uri: "https://avatar.iran.liara.run/public/boy" }}
+          className="w-10 h-10 rounded-full"
+          alt="avatar"
+        />
+        <Text className="font-bold self-center">Jutin</Text>
+      </View>
+      <View>
+        <Image
+          source={require("../../assets/images/post.png")}
+          className="w-full h-[375px] "
+        />
+        <View className="flex-row p-4">
+          <SimpleExpandableText text="Many of the images you will display in your app will not be available at compile time, or you will want to load some dynamically to keep the binary size down." />
+        </View>
+      </View>
+    </View>
+  );
+};
+interface SimpleExpandableTextProps {
+  text: string;
+  maxLength?: number;
+  style?: any;
+  expandTextStyle?: any;
+}
+
+function SimpleExpandableText({
+  text,
+  maxLength = 150,
+  style,
+  expandTextStyle,
+}: SimpleExpandableTextProps) {
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  };
+
+  const shouldTruncate = text.length > maxLength;
+  const displayText =
+    expanded || !shouldTruncate ? text : text.slice(0, maxLength);
+
+  return (
+    <View>
+      <Text style={style}>
+        <Text className="font-bold">Jutin </Text>
+        {displayText}
+
+        <Text> {!expanded && shouldTruncate && "..."} </Text>
+      </Text>
+
+      {shouldTruncate && (
+        <TouchableOpacity onPress={toggleExpanded}>
+          <Text className="text-blue-500">
+            {expanded ? "Show less" : "Show more"}
+          </Text>
+        </TouchableOpacity>
+      )}
+      <Text className="font-semibold text-neutral-700">19 May</Text>
+    </View>
+  );
+}

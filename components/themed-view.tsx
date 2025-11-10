@@ -1,14 +1,31 @@
-import { View, type ViewProps } from 'react-native';
+import { clsx } from "clsx";
+import { View, type ViewProps } from "react-native";
 
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export type ThemedViewProps = ViewProps & {
   lightColor?: string;
   darkColor?: string;
+  className?: string;
 };
 
-export function ThemedView({ style, lightColor, darkColor, ...otherProps }: ThemedViewProps) {
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+export function ThemedView({
+  className,
+  lightColor,
+  darkColor,
+  ...otherProps
+}: ThemedViewProps) {
+  // const backgroundColor = useThemeColor(
+  //   { light: lightColor, dark: darkColor },
+  //   "background"
+  // );
+  const inset = useSafeAreaInsets();
 
-  return <View style={[{ backgroundColor }, style]} {...otherProps} />;
+  return (
+    <View
+      className={clsx('',className)}
+      style={{ paddingTop: inset.top  }}
+      {...otherProps}
+    />
+  );
 }

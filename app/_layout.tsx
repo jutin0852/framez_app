@@ -4,6 +4,8 @@ import { Slot, SplashScreen, useRouter } from "expo-router";
 import "react-native-reanimated";
 
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { getUserData } from "@/services/userServices";
+import { User } from "@supabase/supabase-js";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { Text, View } from "react-native";
@@ -14,7 +16,7 @@ export const unstable_settings = {
 
 function RootNavLayout() {
   // const colorScheme = useColorScheme();
-  const { user, loading } = useAuth();
+  const { user, session, loading, setUser } = useAuth();
   const router = useRouter();
   const [loaded, error] = useFonts({
     "josefin-sans": require("../assets/fonts/JosefinSans-SemiBold.ttf"),
@@ -22,13 +24,24 @@ function RootNavLayout() {
 
   useEffect(() => {
     if (loading) return;
-    if (!user) {
+    if (!session) {
       router.replace("/(auth)/Login");
     } else {
+      updateUserData(session.user);
       router.replace("/(tabs)");
     }
-  }, [user, loading, router]);
-  
+  }, []);
+
+  const updateUserData = async (user: User) => {
+    if (user) {
+      const res = await getUserData(user?.id);
+      if (res.success) {
+        setUser(res.data);
+      }
+    }
+  };
+  // console.log("user", user);
+
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();

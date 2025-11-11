@@ -1,10 +1,16 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { ThemedView } from "@/components/themed-view";
+import { useAuth } from "@/context/AuthContext";
+import React from "react";
+import { Pressable, Text } from "react-native";
 
 export default function Profile() {
+  const { signOut } = useAuth();
   return (
-    <View>
+    <ThemedView>
       <Text>Profile</Text>
-    </View>
-  )
+      <Pressable onPress={signOut}>
+        <Text>Sign out</Text>
+      </Pressable>
+    </ThemedView>
+  );
 }

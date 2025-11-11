@@ -20,7 +20,7 @@ export default function Login() {
 
     setLoading(true);
     try {
-      await signIn(email, password);
+      await signIn(email.trim(), password.trim());
     } catch (error: any) {
       Alert.alert("Login Failed", error.message);
     } finally {

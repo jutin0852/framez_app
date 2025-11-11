@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
 
 export default function SignUp() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ export default function SignUp() {
 
     setLoading(true);
     try {
-      await signUp(email, password);
+      await signUp(email, password,name);
       Alert.alert(
         "Success",
         "Account created! Please check your email to verify your account."
@@ -46,6 +47,14 @@ export default function SignUp() {
     <ThemedView>
       <View className="flex gap-7 mt-40 w-[90%] mx-auto">
         <Text className="m-auto font-bold">FLAMEZ</Text>
+        <TextInput
+          onChangeText={(text) => setName(text)}
+          value={name}
+          placeholder="jutin dikonu"
+          autoCapitalize={"none"}
+          className="bg-[#FAFAFA] border-black/10 border py-4 px-2  rounded-md "
+          editable={!loading}
+        />
         <View>
           <TextInput
             onChangeText={(text) => setEmail(text)}
@@ -90,7 +99,7 @@ export default function SignUp() {
         <View className="m-auto flex-row gap-1">
           <Text className="text-[#000000]/40">Already have an account ?</Text>
           <Link className="text-[#3797EF]" href={"/Login"}>
-            Sign Up
+            Sign in
           </Link>
         </View>
       </View>

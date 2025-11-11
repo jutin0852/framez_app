@@ -1,12 +1,22 @@
 import { ThemedView } from "@/components/themed-view";
+import Avatar from "@/components/ui/Avatar";
+import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function Feed() {
+  const { user } = useAuth();
+  console.log(user);
+
   return (
     <ThemedView>
       <View>
-        <Text style={{fontFamily:'josefin-sans'}} className="m-auto py-4">FRAMEZ</Text>
+        <Text
+          style={{ fontFamily: "josefin-sans" }}
+          className="m-auto w-[90%] py-4"
+        >
+          FRAMEZ
+        </Text>
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -31,15 +41,12 @@ export default function Feed() {
 }
 
 const Post = () => {
+  const { user } = useAuth();
+
   return (
     <View>
-      
       <View className="flex-row p-4 gap-3 border-t border-black/20 ">
-        <Image
-          source={{ uri: "https://avatar.iran.liara.run/public/boy" }}
-          className="w-10 h-10 rounded-full"
-          alt="avatar"
-        />
+        <Avatar uri={user?.image!} />
         <Text className="font-bold self-center">Jutin</Text>
       </View>
       <View>

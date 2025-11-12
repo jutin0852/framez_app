@@ -23,8 +23,8 @@ export function ThemedView({
 
   return (
     <View
-      className={clsx('',className)}
-      style={{ paddingTop: inset.top  }}
+      className={clsx("flex-1 bg-[#FAFAFA]", className)}
+      style={{ paddingTop: inset.top }}
       {...otherProps}
     />
   );

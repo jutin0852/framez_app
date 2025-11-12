@@ -1,13 +1,15 @@
+import Avatar from "@/components/ui/Avatar";
 import { Colors } from "@/constants/theme";
+import { useAuth } from "@/context/AuthContext";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Tabs } from "expo-router";
 import React from "react";
-import { Image } from "react-native";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { user } = useAuth();
 
   return (
     <Tabs
@@ -43,11 +45,7 @@ export default function TabLayout() {
         options={{
           title: "",
           tabBarIcon: ({ color }) => (
-            <Image
-              source={{ uri: "https://avatar.iran.liara.run/public/boy" }}
-              className="w-8 h-8 rounded-full"
-              alt="avatar"
-            />
+            <Avatar uri={user?.image!} className="h-8 w-8" />
           ),
         }}
       />

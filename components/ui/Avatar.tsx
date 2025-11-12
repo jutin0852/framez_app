@@ -1,7 +1,7 @@
 import { getImageSrc } from "@/services/imageService";
 import { clsx } from "clsx";
-import { Image } from "expo-image";
 import React from "react";
+import { Image } from "react-native";
 
 export default function Avatar({
   uri,
@@ -12,9 +12,8 @@ export default function Avatar({
 }) {
   return (
     <Image
-      className={clsx("w-10 h-10 ", className)}
+      className={clsx("w-10 h-10 rounded-full ", className)}
       source={getImageSrc(uri)}
-      transition={100}
     />
   );
 }

@@ -2,7 +2,14 @@ import { ThemedView } from "@/components/themed-view";
 import Avatar from "@/components/ui/Avatar";
 import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function Feed() {
   const { user } = useAuth();
@@ -17,6 +24,12 @@ export default function Feed() {
         >
           FRAMEZ
         </Text>
+
+        <View>
+          <Pressable></Pressable>
+          <Pressable></Pressable>
+          <Pressable></Pressable>
+        </View>
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}

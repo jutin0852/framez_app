@@ -1,6 +1,6 @@
 import "@/global.css";
 import { useFonts } from "expo-font";
-import { Slot, SplashScreen, useRouter } from "expo-router";
+import { SplashScreen, Stack, useRouter } from "expo-router";
 import "react-native-reanimated";
 
 import { AuthProvider, useAuth } from "@/context/AuthContext";
@@ -24,13 +24,13 @@ function RootNavLayout() {
 
   useEffect(() => {
     if (loading) return;
-    if (!session) {
+    if (!session && session == null) {
       router.replace("/(auth)/Login");
     } else {
       updateUserData(session.user);
       router.replace("/(tabs)");
     }
-  }, []);
+  }, [session]);
 
   const updateUserData = async (user: User) => {
     if (user) {
@@ -61,7 +61,7 @@ function RootNavLayout() {
   }
   return (
     <>
-      <Slot />
+      <Stack screenOptions={{ headerShown: false }} />
       <StatusBar />
     </>
   );

@@ -1,0 +1,1 @@
+export const supaBaseUrl = "https://udgmnwpzgwttxjtnrfit.supabase.co";

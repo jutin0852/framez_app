@@ -3,10 +3,12 @@ import { createClient, processLock } from "@supabase/supabase-js";
 import { AppState, Platform } from "react-native";
 import "react-native-url-polyfill/auto";
 
-const supabaseUrl = process.env.EXPO_PUBLIC_YOUR_REACT_NATIVE_SUPABASE_URL!;
-const supabaseAnonKey = "sb_publishable_C-Hx1Lhi5U9GhxNEQgdCLw_FIf9NH7R";
+const supabaseAnonKey = process.env
+  .EXPO_PUBLIC_YOUR_REACT_NATIVE_SUPABASE_PUBLISHABLE_KEY as string;
+const supaBaseUrl = process.env
+  .EXPO_PUBLIC_YOUR_REACT_NATIVE_SUPABASE_URL as string;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+export const supabase = createClient(supaBaseUrl, supabaseAnonKey, {
   auth: {
     ...(Platform.OS !== "web" ? { storage: AsyncStorage } : {}),
     autoRefreshToken: true,

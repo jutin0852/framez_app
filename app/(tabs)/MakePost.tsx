@@ -88,17 +88,17 @@ export default function AddPost() {
     return false;
   };
 
-  const getFileType = (file: any) => {
-    if (!file) return null;
-    if (IsFileLocal(file)) {
-      return file.type;
-    }
+  // const getFileType = (file: any) => {
+  //   if (!file) return null;
+  //   if (IsFileLocal(file)) {
+  //     return file.type;
+  //   }
 
-    if (file.includes("postImages")) {
-      return "image";
-    }
-    return "video";
-  };
+  //   if (file.includes("postImages")) {
+  //     return "image";
+  //   }
+  //   return "video";
+  // };
 
   const getFileUri = (file: any) => {
     if (!file) return null;

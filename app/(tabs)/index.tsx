@@ -20,7 +20,6 @@ import {
 } from "react-native";
 
 export default function Feed() {
-  const { user } = useAuth();
   const [posts, setPosts] = useState<Posts[] | null>(null);
 
   const getPost = async () => {

@@ -7,7 +7,7 @@ export default function Avatar({
   uri,
   className,
 }: {
-  uri: string;
+  uri: string | null;
   className?: string;
 }) {
   return (

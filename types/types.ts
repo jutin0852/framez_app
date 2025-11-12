@@ -7,3 +7,16 @@ export type User = {
   image: string | null;
   created_at: string;
 };
+
+export type Posts = {
+  body: string;
+  created_at: string;
+  file: string | null;
+  id: string;
+  user: {
+    id: string;
+    image: string | null;
+    name: string;
+  };
+  userId: string;
+};

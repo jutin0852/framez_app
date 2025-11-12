@@ -47,7 +47,6 @@ export default function EditProfile() {
         userData.image = null;
       }
     }
-    console.log("Uploaded image URL:", imageUrl);
 
     const updatedData = {
       ...userData,
@@ -61,7 +60,6 @@ export default function EditProfile() {
       router.back();
     }
   };
-  console.log("userData:", userData?.image);
 
   const pickImage = async () => {
     try {
@@ -73,13 +71,12 @@ export default function EditProfile() {
         return;
       }
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ["images", "videos"],
+        mediaTypes: ["images"],
         allowsEditing: true,
         aspect: [1, 1],
         quality: 0.8,
       });
 
-      console.log(result);
 
       if (!result.canceled && result.assets[0]) {
         setSelectedImage(result.assets[0]);
@@ -104,7 +101,6 @@ export default function EditProfile() {
       setSelectedImage(null);
     }
   }, [currentUser]);
-  console.log('selectedImage:', selectedImage);
 
   return (
     <ThemedView className="items-center">

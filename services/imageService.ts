@@ -11,7 +11,7 @@ export const getImageSrc = (imgscr: string | null) => {
   }
 };
 
-const getSupabaseImageUrl = (path: string) => {
+export const getSupabaseImageUrl = (path: string) => {
   if (!path) return null;
   return `${supaBaseUrl}/storage/v1/object/public/uploads/${path}`;
 };

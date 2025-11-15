@@ -1,12 +1,13 @@
 import { supabase } from "@/lib/supabase";
 import { User } from "@/types/types";
 import { Session } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface AuthContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   session: Session | null;
+  setSession: React.Dispatch<React.SetStateAction<Session | null>>;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, name: string) => Promise<void>;
@@ -19,21 +20,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setloading] = useState(true);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session ?? null);
-      setloading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
@@ -63,7 +49,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <authContext.Provider
-      value={{ user, session, loading, signIn, signUp, signOut, setUser }}
+      value={{
+        user,
+        session,
+        loading,
+        signIn,
+        signUp,
+        signOut,
+        setUser,
+        setSession,
+      }}
     >
       {children}
     </authContext.Provider>

@@ -1,14 +1,13 @@
 import "@/global.css";
-import { useFonts } from "expo-font";
 import { SplashScreen, Stack, useRouter } from "expo-router";
 import "react-native-reanimated";
 
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { supabase } from "@/lib/supabase";
 import { getUserData } from "@/services/userServices";
-import { User } from "@supabase/supabase-js";
+import { useFonts } from "expo-font";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -16,23 +15,37 @@ export const unstable_settings = {
 
 function RootNavLayout() {
   // const colorScheme = useColorScheme();
-  const { user, session, loading, setUser } = useAuth();
+  const { setSession, setUser } = useAuth();
   const router = useRouter();
   const [loaded, error] = useFonts({
     "josefin-sans": require("../assets/fonts/JosefinSans-SemiBold.ttf"),
   });
 
   useEffect(() => {
-    if (loading) return;
-    if (!session && session == null) {
-      router.replace("/(auth)/Login");
-    } else {
-      updateUserData(session.user);
-      router.replace("/(tabs)");
-    }
-  }, [session]);
+    // supabase.auth.getSession().then(({ data: { session } }) => {
+    //   setSession(session ?? null);
+    //   setloading(false);
+    // });
 
-  const updateUserData = async (user: User) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        setSession(session);
+        updateUserData(session.user);
+        console.log("session",session);
+
+        router.replace("/(tabs)/Home");
+      } else {
+        setSession(null);
+        router.replace("/(auth)/Login");
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const updateUserData = async (user: any) => {
     if (user) {
       const res = await getUserData(user?.id);
       if (res.success) {
@@ -40,7 +53,6 @@ function RootNavLayout() {
       }
     }
   };
-  // console.log("user", user);
 
   useEffect(() => {
     if (loaded || error) {
@@ -52,13 +64,6 @@ function RootNavLayout() {
     return null;
   }
 
-  if (loading) {
-    return (
-      <View>
-        <Text>loading</Text>
-      </View>
-    );
-  }
   return (
     <>
       <Stack screenOptions={{ headerShown: false }} />

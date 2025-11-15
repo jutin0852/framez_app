@@ -40,7 +40,7 @@ export default function AddPost() {
       setLoading(false);
       if (res.success) {
         Alert.alert("Success", "Post created successfully");
-        router.push("/(tabs)");
+        router.push("/(tabs)/Home");
         console.log(res);
         setText("");
         setFile(null);

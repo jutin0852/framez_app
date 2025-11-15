@@ -1,8 +1,6 @@
 import { ThemedView } from "@/components/themed-view";
 import Button from "@/components/ThemedButton";
-import { useAuth } from "@/context/AuthContext";
-// import Ionicons from "@expo/vector-icons/Ionicons";
-import { Link } from "expo-router";
+import { useAuth } from "@/context/AuthContext";import { Link } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
 

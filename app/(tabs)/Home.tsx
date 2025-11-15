@@ -29,8 +29,9 @@ export default function Feed() {
     }
   };
 
-  const newPostPayload = async (payload: any) => {
 
+
+  const newPostPayload = async (payload: any) => {
     console.log("payload", payload.eventType);
     if (payload.eventType === "INSERT" && payload?.new?.id) {
       let newPost = { ...payload.new };
@@ -107,19 +108,13 @@ export const Post = ({
   item: Posts;
   ondelete: (id: string) => void;
 }) => {
-  const shadowStyle = {
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    elevation: 1,
-  };
   const createdAt = moment(item.created_at).format(" MMM D");
   const { user } = useAuth();
 
   if (item.file) {
     return (
       <View
-        style={[{ borderRadius: 30, marginBottom: 10 }, shadowStyle]}
+        style={[{ borderRadius: 30, marginBottom: 10 }]}
         className=" border-black/20 gap-4  border mx-auto w-[90%]"
       >
         <View className="flex-row justify-between">
@@ -164,7 +159,7 @@ export const Post = ({
   return (
     <View
       className="border rounded-2xl p-t border-black/20 gap-4 p-3 mx-auto w-[90%] "
-      style={[{ borderRadius: 30, marginBottom: 10 }, shadowStyle]}
+      style={[{ borderRadius: 30, marginBottom: 10 }]}
     >
       <View className="flex-row justify-between">
         <View className="flex-row  gap-3 rounded-lg ">

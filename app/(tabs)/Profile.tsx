@@ -8,7 +8,7 @@ import { Posts } from "@/types/types";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, FlatList, Pressable, Text, View } from "react-native";
-import { Post } from ".";
+import { Post } from "./Home";
 
 export default function Profile() {
   const { user, signOut } = useAuth();

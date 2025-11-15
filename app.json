@@ -24,7 +24,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.iam_jutin.framez"
+      "package": "com.jutin.framez"
     },
     "web": {
       "output": "static",
